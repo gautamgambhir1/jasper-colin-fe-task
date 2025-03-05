@@ -1,0 +1,36 @@
+{
+  "extends": ["next/core-web-vitals", "eslint:recommended", "prettier"],
+  "rules": {
+    "react/jsx-filename-extension": [
+      "warn",
+      { "extensions": [".tsx", ".jsx"] }
+    ],
+    "react/jsx-uses-react": "off",
+    "no-console": "warn",
+    "no-unused-vars": [
+      "off",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": true,
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "/\/^_\/u/u"
+      }
+    ],
+    "react/prop-types": "warn",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ]
+  }
+}
