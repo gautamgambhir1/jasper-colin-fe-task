@@ -56,7 +56,7 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
         setActiveTab,
         openMenus,
         toggleMenu,
-        setOpenMenus
+        setOpenMenus,
       }}
     >
       {children}
