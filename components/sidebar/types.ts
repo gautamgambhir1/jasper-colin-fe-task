@@ -31,4 +31,5 @@ export type SidebarContextType = {
   setActiveTab: (value: string) => void;
   openMenus: Record<string, boolean>;
   toggleMenu: (menu: string) => void;
+  setOpenMenus: (menus: { [key: string]: boolean }) => void;
 };

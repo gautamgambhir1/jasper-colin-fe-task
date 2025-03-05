@@ -4,6 +4,7 @@ import { Search, LayoutGrid, MessageCircle, Sun } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import { useEffect } from 'react';
 import type React from 'react';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,13 +13,29 @@ import { SIDEBAR_ITEMS } from './constant';
 import { SidebarSubmenuItem, SidebarItem, SidebarIcon } from './index';
 
 export function Sidebar() {
-  const { isExpanded, activeTab, setActiveTab, openMenus, toggleMenu } =
-    useSidebar();
   const pathname = usePathname();
-
   const isActive = (path: string) => pathname === path;
   const isActiveSubmenu = (basePath: string) => pathname.startsWith(basePath);
+  const {
+    isExpanded,
+    activeTab,
+    setActiveTab,
+    openMenus,
+    toggleMenu,
+    setOpenMenus,
+  } = useSidebar();
+
   const { setTheme, theme } = useTheme();
+
+  useEffect(() => {
+    const updatedMenus = { ...openMenus };
+    SIDEBAR_ITEMS.forEach((item) => {
+      if (item.hasSubmenu && pathname.startsWith(item.href)) {
+        updatedMenus[item.label] = true;
+      }
+    });
+    setOpenMenus(updatedMenus);
+  }, [pathname, setOpenMenus]);
 
   return (
     <div className="flex h-screen">
@@ -27,7 +44,7 @@ export function Sidebar() {
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
           className="flex cursor-pointer items-center justify-center w-10 h-10 rounded-full text-white bg-orange-500 mb-6"
         >
-          <Sun className='cursor-pointer' />
+          <Sun className="cursor-pointer" />
         </div>
 
         <div className="flex flex-col items-center space-y-1">
@@ -56,6 +73,7 @@ export function Sidebar() {
           <div className="mt-4 relative">
             <Image
               width={0}
+              priority
               height={0}
               src="/avatar.png"
               alt="User avatar"
